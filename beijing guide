@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+ <html lang="zh-CN">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Beijing City Guide</title>
+     <style>
+         :root {
+             --primary-color: #c8102e;
+             --secondary-color: #ffd700;
+         }
+         body {
+             font-family: 'Microsoft YaHei', sans-serif;
+             margin: 0;
+             padding: 20px;
+             background-color: #f9f9f9;
+         }
+         .hero {
+             text-align: center;
+             padding: 5rem;
+             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                         url('https://images.unsplash.com/photo-1587334274328-64186a3fa6e6') center/cover;
+             color: white;
+             border-radius: 10px;
+             margin-bottom: 2rem;
+         }
+         .tab-container {
+             display: flex;
+             gap: 10px;
+             margin-bottom: 20px;
+             flex-wrap: wrap;
+         }
+         .tab {
+             padding: 15px 30px;
+             background: var(--secondary-color);
+             border: none;
+             border-radius: 25px;
+             cursor: pointer;
+             color: #333;
+             transition: 0.3s;
+             font-weight: bold;
+         }
+         .tab.active {
+             background: var(--primary-color);
+             color: white;
+         }
+         .accordion {
+             background: white;
+             border-radius: 8px;
+             margin-bottom: 10px;
+             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+         }
+         .accordion-header {
+             padding: 18px;
+             cursor: pointer;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             font-size: 1.1em;
+         }
+         .accordion-content {
+             padding: 0;
+             max-height: 0;
+             overflow: hidden;
+             transition: 0.3s ease;
+             line-height: 1.6;
+         }
+         .accordion.active .accordion-content {
+             padding: 18px;
+             max-height: 1000px;
+         }
+         dialog {
+             border: none;
+             border-radius: 12px;
+             padding: 2rem;
+             width: 85%;
+             max-width: 600px;
+             box-shadow: 0 0 25px rgba(0,0,0,0.2);
+         }
+         .gallery {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+             gap: 25px;
+             margin-top: 25px;
+         }
+         .gallery img {
+             width: 100%;
+             height: 220px;
+             object-fit: cover;
+             border-radius: 8px;
+             transition: transform 0.3s;
+         }
+         .gallery img:hover {
+             transform: scale(1.03);
+         }
+     </style>
+ </head>
+ <body>
+     <div class="hero">
+         <h1>Beijing - China's capital</h1>
+         <p>Three thousand years of city building history, eight hundred years of capital building history</p>
+         <button class="tab" onclick="showDialog('welcome')">View the welcome words</button>
+     </div>
+
+     <div class="tab-container">
+         <button class="tab active" onclick="showTab('history')">Historical Evolution</button>
+         <button class="tab" onclick="showTab('landmarks')">Landmarks</button>
+         <button class="tab" onclick="showTab('culture')">Cultural Features</button>
+     </div>
+
+     <div id="history" class="tab-content active">
+         <div class="accordion">
+             <div class="accordion-header" onclick="toggleAccordion(this)">
+                 <h3>History of City Building</h3>
+                 <span>▼</span>
+             </div>
+             <div class="accordion-content">
+                 <p>Beijing was first recorded as "Ji", and was the capital of Yan State during the Spring and Autumn Period and the Warring States Period.  In 1153 AD, the Jin Dynasty officially established its capital here, and it was called Zhongdu...</p>
+             </div>
+         </div>
+     </div>
+
+     <div id="landmarks" class="tab-content">
+         <div class="gallery">
+             <img src="https://images.unsplash.com/photo-1596968368024-878bcc8b1c8f" alt="Forbidden City">
+             <img src="https://images.unsplash.com/photo-1544980242-5b3d54ad7c26" alt="Great Wall">
+             <img src="https://images.unsplash.com/photo-1609142621730-e8e53b3975ff" alt="Temple of Heaven">
+         </div>
+     </div>
+
+     <dialog id="welcomeDialog">
+         <h2>Welcome to Beijing</h2>
+         <p>This international metropolis that combines ancient civilizations and modern vitality has 7 UNESCO World Heritage Sites...</p>
+         <button onclick="closeDialog('welcome')">Close</button>
+     </dialog>
+
+     <script>
+         function showTab(tabId) {
+             document.querySelectorAll('.tab-content').forEach(content => {
+                 content.classList.remove('active');
+             });
+             document.querySelectorAll('.tab').forEach(tab => {
+                 tab.classList.remove('active');
+             });
+             document.getElementById(tabId).classList.add('active');
+             event.currentTarget.classList.add('active');
+         }
+
+         function toggleAccordion(header) {
+             const according = header.parentElement;
+             according.classList.toggle('active');
+         }
+
+         function showDialog(dialogId) {
+             document.getElementById(dialogId + 'Dialog').showModal();
+         }
+
+         function closeDialog(dialogId) {
+             document.getElementById(dialogId + 'Dialog').close();
+         }
+     </script>
+ </body>
+ </html>
